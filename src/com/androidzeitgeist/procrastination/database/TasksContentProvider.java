@@ -68,7 +68,7 @@ public class TasksContentProvider extends ContentProvider {
 
         getContext().getContentResolver().notifyChange(uri, null);
         
-        NotificationHelper.updateNotification(getContext());
+        NotificationHelper.refreshNotification(getContext());
 
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("content");
@@ -86,7 +86,7 @@ public class TasksContentProvider extends ContentProvider {
 
         getContext().getContentResolver().notifyChange(uri, null);
         
-        NotificationHelper.updateNotification(getContext());
+        NotificationHelper.refreshNotification(getContext());
 
         return affectedRows;
     }
@@ -98,7 +98,7 @@ public class TasksContentProvider extends ContentProvider {
 
         getContext().getContentResolver().notifyChange(uri, null);
         
-        NotificationHelper.updateNotification(getContext());
+        NotificationHelper.refreshNotification(getContext());
 
         return affectedRows;
     }
