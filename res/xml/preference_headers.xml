@@ -1,0 +1,8 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <header
+        android:fragment="com.androidzeitgeist.procrastination.fragment.NotificationSettingsFragment"
+        android:summary="@string/settings_category_notifications_description"
+        android:title="@string/settings_category_notifications_title" />
+
+</preference-headers>

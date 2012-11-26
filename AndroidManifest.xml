@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.androidzeitgeist.procrastination"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="17" />
+
+    <permission android:name="com.androidzeitgeist.procrastination.permission.READ_TASKS" />
+    <permission android:name="com.androidzeitgeist.procrastination.permission.WRITE_TASKS" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".activity.StartupActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.TasksActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.HistoryActivity"
+            android:label="@string/title_completed_tasks" />
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:label="@string/title_settings" />
+        <provider
+            android:name=".database.TasksContentProvider"
+            android:authorities="com.androidzeitgeist.procrastination"
+            android:exported="false"
+            android:readPermission="com.androidzeitgeist.procrastination.permission.READ_TASKS"
+            android:writePermission="com.androidzeitgeist.procrastination.permission.WRITE_TASKS" />
+        <receiver android:exported="true" android:name="com.androidzeitgeist.procrastination.receiver.BootAndAlarmReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package" android:path="com.androidzeitgeist.procrastination" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".service.NotificationAlarmService" />
+    </application>
+
+</manifest>

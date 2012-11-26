@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Procrastination</string>
+
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+
+    <string name="menu_completed_tasks">View completed tasks</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_about">About</string>
+    <string name="menu_clear_tasks">Clear completed tasks</string>
+    
+    <string name="context_edit">Edit</string>
+    <string name="context_delete">Delete</string>
+   
+    <string name="title_completed_tasks">Completed tasks</string>
+    <string name="title_settings">Settings</string>
+    
+    <string name="hint_task">Add a new task..</string>
+    
+    <string name="selected_tasks">%d selected</string>
+    
+    <string name="edit_task_dialog_title">Edit task</string>
+    
+    <string name="empty_history">No done tasks yet.</string>
+    
+    <string name="toast_tasks_cleared">Cleared completed tasks</string>
+    
+    <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    
+    <string name="notification_title">%d open tasks</string>
+    <string name="notification_text">Tasks are waiting for you.</string>
+    
+    <string name="settings_category_notifications_title">Notifications</string>
+    <string name="settings_category_notifications_description">Get reminded about open tasks.</string>
+
+    <string name="settings_notification_title">Show notification</string>
+    <string name="settings_notification_description">Show daily notification about open tasks.</string>
+    
+    <string name="settings_ongoing_notification_title">Ongoing notification</string>
+    <string name="settings_ongoing_notification_description">Use notification that can\'t be removed until all tasks are done.</string>
+</resources>
