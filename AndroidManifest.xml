@@ -11,8 +11,8 @@
     <permission android:name="com.androidzeitgeist.procrastination.permission.READ_TASKS" />
     <permission android:name="com.androidzeitgeist.procrastination.permission.WRITE_TASKS" />
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -38,22 +38,44 @@
         <activity
             android:name=".activity.SettingsActivity"
             android:label="@string/title_settings" />
+
         <provider
             android:name=".database.TasksContentProvider"
             android:authorities="com.androidzeitgeist.procrastination"
             android:exported="false"
             android:readPermission="com.androidzeitgeist.procrastination.permission.READ_TASKS"
             android:writePermission="com.androidzeitgeist.procrastination.permission.WRITE_TASKS" />
-        <receiver android:exported="true" android:name="com.androidzeitgeist.procrastination.receiver.BootAndAlarmReceiver">
+
+        <receiver
+            android:name="com.androidzeitgeist.procrastination.receiver.BootAndAlarmReceiver"
+            android:exported="true" >
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
-                <data android:scheme="package" android:path="com.androidzeitgeist.procrastination" />
+
+                <data
+                    android:path="com.androidzeitgeist.procrastination"
+                    android:scheme="package" />
             </intent-filter>
         </receiver>
+
         <service android:name=".service.NotificationAlarmService" />
+
+        <receiver android:name=".widget.TaskWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/task_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".widget.TaskWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>
