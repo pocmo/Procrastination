@@ -6,13 +6,9 @@
 
     <TextView
         android:id="@+id/header"
+        style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#eeeeee"
-        android:gravity="center_vertical"
-        android:padding="6dip"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/title"
