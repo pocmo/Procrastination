@@ -1,7 +1,6 @@
 package com.androidzeitgeist.procrastination.widget;
 
 import android.annotation.SuppressLint;
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -13,7 +12,6 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.androidzeitgeist.procrastination.R;
-import com.androidzeitgeist.procrastination.activity.AboutActivity;
 import com.androidzeitgeist.procrastination.activity.TaskDialogActivity;
 import com.androidzeitgeist.procrastination.database.TaskAccessHelper;
 import com.androidzeitgeist.procrastination.database.TasksColumns;
