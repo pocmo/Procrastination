@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Procrastination</string>
+    <string name="copyright">&#169; 2012 Sebastian Kaspari</string>
+    <string name="app_url">http://www.androidzeitgeist.com</string>
 
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
@@ -47,8 +49,8 @@
     <string name="about_text"></string>
 
     <string name="widget_title">Widget</string>
-    <string name="widget_text"></string>
+    <string name="widget_text">Use a widget showing your open tasks on your home or lock screen.</string>
 
     <string name="sync_title">Synchronization</string>
-    <string name="sync_text"></string>
+    <string name="sync_text">Synchronize your tasks with Google tasks and other devices.</string>
 </resources>
