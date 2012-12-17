@@ -1,14 +1,19 @@
 package com.androidzeitgeist.procrastination.fragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.ListFragment;
 import android.text.TextUtils;
@@ -20,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SoundEffectConstants;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.CursorAdapter;
@@ -40,10 +46,14 @@ import com.androidzeitgeist.procrastination.model.Task;
 public class DayFragment extends ListFragment implements LoaderCallbacks<Cursor>, OnDismissCallback, ActionMode.Callback {
     private static final int TYPE_TODAY    = 1;
     private static final int TYPE_TOMORROW = 2;
+
+    private static final int VOICE_RECOGNITION_REQUEST_CODE = 1;
+
     private static final String ARGUMENT_TYPE = "type";
 
     private TaskCursorAdapter adapter;
     private SwipeDismissListViewTouchListener dismissListener;
+    private EditText taskView;
 
     private ActionMode actionMode;
 
@@ -87,12 +97,11 @@ public class DayFragment extends ListFragment implements LoaderCallbacks<Cursor>
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_day, container, false);
 
-        ((EditText) view.findViewById(R.id.task)).setOnEditorActionListener(new OnEditorActionListener() {
+        taskView = (EditText) view.findViewById(R.id.task);
+        taskView.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    EditText taskView = (EditText) view;
-
                     addTask(taskView.getText().toString());
                     TextKeyListener.clear(taskView.getText());
 
@@ -101,6 +110,15 @@ public class DayFragment extends ListFragment implements LoaderCallbacks<Cursor>
                 return false;
             }
         });
+
+        View recordView = view.findViewById(R.id.record);
+        recordView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startVoiceRecognition();
+            }
+        });
+        recordView.setVisibility(isVoiceRecognitionAvailable() ? View.VISIBLE : View.GONE);
 
         ListView listView = (ListView) view.findViewById(android.R.id.list);
 
@@ -113,6 +131,37 @@ public class DayFragment extends ListFragment implements LoaderCallbacks<Cursor>
         listView.setOnScrollListener(dismissListener.makeScrollListener());
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK || requestCode != VOICE_RECOGNITION_REQUEST_CODE) {
+            return;
+        }
+
+        ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+        if (!matches.isEmpty()) {
+            taskView.append(matches.get(0));
+        }
+    }
+
+    private boolean isVoiceRecognitionAvailable() {
+        PackageManager pm = getActivity().getPackageManager();
+        List<ResolveInfo> activities = pm.queryIntentActivities(
+            new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), VOICE_RECOGNITION_REQUEST_CODE
+        );
+
+        return activities.size() > 0;
+    }
+
+    private void startVoiceRecognition() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getActivity().getPackageName());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "");
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
     }
 
     public void addTask(String title) {
@@ -135,21 +184,11 @@ public class DayFragment extends ListFragment implements LoaderCallbacks<Cursor>
         TaskCursorAdapter adapter = (TaskCursorAdapter) getListAdapter();
         Task task = adapter.getTaskAtPosition(position);
 
-        long dayMs = 1000 * 60 * 60 * 24;
-        long dueAt = task.getDueAt() + (isShowingToday() ? dayMs : -dayMs);
-
-        ContentValues values = new ContentValues();
-        values.put(TasksColumns.DUE_AT, dueAt);
-
-        String selection = TasksColumns._ID + " = ?";
-        String[] selectionArgs = new String[] { String.valueOf(task.getId()) };
-
-        getActivity().getContentResolver().update(
-            TasksContentProvider.TASKS_URI,
-            values,
-            selection,
-            selectionArgs
-        );
+        if (isShowingToday()) {
+            TaskAccessHelper.doTomorrow(getActivity(), task.getId());
+        } else {
+            TaskAccessHelper.doToday(getActivity(), task.getId());
+        }
     }
 
     @Override
@@ -190,7 +229,7 @@ public class DayFragment extends ListFragment implements LoaderCallbacks<Cursor>
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         getActivity().getMenuInflater().inflate(R.menu.context_tasks, menu);
-        
+
         dismissListener.setEnabled(false);
 
         return true;
@@ -201,19 +240,19 @@ public class DayFragment extends ListFragment implements LoaderCallbacks<Cursor>
         menu.findItem(R.id.edit).setVisible(
             adapter.getSelectedCount() <= 1
         );
-        
+
         return true;
     }
 
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         int id = item.getItemId();
-        
+
         if (id == R.id.delete) {
             deleteSelectedTasks();
             return true;
         }
-        
+
         if (id == R.id.edit) {
             editSelectedTask();
             return true;
@@ -221,12 +260,12 @@ public class DayFragment extends ListFragment implements LoaderCallbacks<Cursor>
 
         return false;
     }
-    
+
     private void deleteSelectedTasks() {
         adapter.getSelectedCount();
-        
+
         List<Long> selectedIds = adapter.getSelectedIds();
-        
+
         for (long id : selectedIds) {
             getActivity().getContentResolver().delete(
                 TasksContentProvider.TASKS_URI,
@@ -237,7 +276,7 @@ public class DayFragment extends ListFragment implements LoaderCallbacks<Cursor>
 
         actionMode.finish();
     };
-    
+
     private void editSelectedTask() {
         DialogFragment fragment = EditTaskDialogFragment.newInstance(
             adapter.getSelectedIds().get(0)

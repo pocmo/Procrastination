@@ -3,7 +3,6 @@ package com.androidzeitgeist.procrastination.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Paint;
@@ -17,14 +16,14 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import com.androidzeitgeist.procrastination.R;
-import com.androidzeitgeist.procrastination.database.TasksColumns;
+import com.androidzeitgeist.procrastination.database.TaskAccessHelper;
 import com.androidzeitgeist.procrastination.model.Task;
 
 public class TaskCursorAdapter extends CursorAdapter {
     private Context context;
 
     private int defaultFlags = 0;
-    
+
     private List<Long> selectedTasks;
 
     public TaskCursorAdapter(Context context) {
@@ -37,10 +36,10 @@ public class TaskCursorAdapter extends CursorAdapter {
     public Task getTaskAtPosition(int position) {
         return new Task((Cursor) getItem(position));
     }
-    
+
     public void toggleSelection(int position) {
         Long id = getItemId(position);
-        
+
         if (selectedTasks.contains(id)) {
             selectedTasks.remove(id);
         } else {
@@ -49,17 +48,17 @@ public class TaskCursorAdapter extends CursorAdapter {
 
         notifyDataSetChanged();
     }
-    
+
     public int getSelectedCount() {
         return selectedTasks.size();
     }
-    
+
     public void clearSelections() {
         selectedTasks.clear();
-        
+
         notifyDataSetChanged();
     }
-    
+
     public List<Long> getSelectedIds() {
         return selectedTasks;
     }
@@ -67,7 +66,7 @@ public class TaskCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
         final Task task = new Task(cursor);
-        
+
         if (selectedTasks.contains(task.getId())) {
             view.setBackgroundResource(R.drawable.selected_bg);
         } else {
@@ -98,14 +97,8 @@ public class TaskCursorAdapter extends CursorAdapter {
     }
 
     public void onCheckedChanged(Task task, boolean isChecked) {
-        ContentValues values = new ContentValues();
 
-        values.put(TasksColumns.DONE_AT, isChecked ? System.currentTimeMillis() : 0);
-
-        String selection = TasksColumns._ID + " = ?";
-        String[] selectionArgs = new String[] { String.valueOf(task.getId()) };
-
-        context.getContentResolver().update(task.getUri(), values, selection, selectionArgs);
+        TaskAccessHelper.markAsDone(context, task.getId(), isChecked);
     }
 
     @Override

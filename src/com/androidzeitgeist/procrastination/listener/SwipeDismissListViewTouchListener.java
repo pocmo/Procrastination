@@ -21,6 +21,7 @@ package com.androidzeitgeist.procrastination.listener;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
@@ -234,6 +235,7 @@ public class SwipeDismissListViewTouchListener implements View.OnTouchListener, 
                 float velocityY = Math.abs(mVelocityTracker.getYVelocity());
                 boolean dismiss = false;
                 boolean dismissRight = false;
+
                 if (Math.abs(deltaX) > mViewWidth / 2) {
                     dismiss = true;
                     dismissRight = deltaX > 0;
@@ -310,6 +312,8 @@ public class SwipeDismissListViewTouchListener implements View.OnTouchListener, 
     }
 
     private void performDismiss(final View dismissView, final int dismissPosition) {
+        Log.d("Procrastination", "DISMISS (" + dismissPosition + ")");
+
         dismissView.setAlpha(0f);
 
         mCallback.onDismiss(mListView, dismissPosition);

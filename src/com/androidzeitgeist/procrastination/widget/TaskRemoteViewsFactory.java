@@ -1,6 +1,7 @@
 package com.androidzeitgeist.procrastination.widget;
 
 import android.annotation.SuppressLint;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -12,9 +13,12 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.androidzeitgeist.procrastination.R;
+import com.androidzeitgeist.procrastination.activity.AboutActivity;
+import com.androidzeitgeist.procrastination.activity.TaskDialogActivity;
 import com.androidzeitgeist.procrastination.database.TaskAccessHelper;
 import com.androidzeitgeist.procrastination.database.TasksColumns;
 import com.androidzeitgeist.procrastination.database.TasksContentProvider;
+import com.androidzeitgeist.procrastination.helper.Extra;
 import com.androidzeitgeist.procrastination.model.Task;
 
 public class TaskRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
@@ -73,7 +77,16 @@ public class TaskRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
     @Override
     public RemoteViews getViewAt(int position) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_item_task);
-        views.setTextViewText(R.id.title, getTask(position).getTitle());
+
+        Task task = getTask(position);
+
+        Intent intent = new Intent(context.getApplicationContext(), TaskDialogActivity.class);
+        intent.putExtra(Extra.TASK_ID, task.getId());
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        views.setOnClickFillInIntent(R.id.task, intent);
+        views.setTextViewText(R.id.title, task.getTitle());
+
         return views;
     }
 

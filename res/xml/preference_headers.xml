@@ -5,4 +5,19 @@
         android:summary="@string/settings_category_notifications_description"
         android:title="@string/settings_category_notifications_title" />
 
+    <header
+        android:fragment="com.androidzeitgeist.procrastination.fragment.SyncFragment"
+        android:summary="@string/sync_text"
+        android:title="@string/sync_title" />
+
+    <header
+        android:fragment="com.androidzeitgeist.procrastination.fragment.WidgetFragment"
+        android:summary="@string/widget_text"
+        android:title="@string/widget_title" />
+
+    <header
+        android:fragment="com.androidzeitgeist.procrastination.fragment.AboutFragment"
+        android:summary="@string/about_text"
+        android:title="@string/about_title" />
+
 </preference-headers>
