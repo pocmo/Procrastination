@@ -30,8 +30,8 @@
 
     <string name="dialog_button_ok">OK</string>
     <string name="dialog_button_cancel">Cancel</string>
-    <string name="dialog_button_mark_done">MARK AS DONE</string>
-    <string name="dialog_button_do_tomorrow">DO IT TOMORROW</string>
+    <string name="dialog_button_mark_done">Mark as done</string>
+    <string name="dialog_button_do_tomorrow">Do it tomorrow</string>
 
     <string name="notification_title">%d open tasks</string>
     <string name="notification_text">Tasks are waiting for you.</string>
