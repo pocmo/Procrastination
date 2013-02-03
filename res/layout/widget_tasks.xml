@@ -41,6 +41,7 @@
         android:background="@drawable/widget_background"
         android:gravity="center"
         android:padding="10dp"
+        android:text="@string/empty_widget"
         android:textColor="#111111" />
 
 </LinearLayout>

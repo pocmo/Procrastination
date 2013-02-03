@@ -64,6 +64,12 @@ public class TasksActivity extends FragmentActivity {
             return true;
         }
 
+        if (id == R.id.addons) {
+            Intent intent = new Intent(this, AddonsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }

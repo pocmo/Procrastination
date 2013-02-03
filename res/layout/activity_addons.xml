@@ -1,0 +1,68 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/not_available"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="#dd0000"
+            android:padding="4dp"
+            android:text="@string/billing_not_supported"
+            android:textColor="#ffffff"
+            android:visibility="gone" />
+
+        <TextView
+            style="@android:style/TextAppearance.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/addons_widget_title"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/box_buy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:drawableTop="@drawable/widget_preview_with_border"
+                android:text="@string/addons_widget_text" />
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:onClick="onBuyWidget"
+                android:text="@string/action_buy_widget" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/box_thanks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:drawableTop="@drawable/widget_preview_purchased_with_border"
+                android:text="@string/addons_widget_thanks" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
