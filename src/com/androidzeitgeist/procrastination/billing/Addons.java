@@ -16,8 +16,7 @@ public class Addons {
             PREFERENCE_NAME, Context.MODE_PRIVATE
         );
 
-        return true;
-        //return preferences.getBoolean(SETTING_WIDGET_ENABLED, false);
+        return preferences.getBoolean(SETTING_WIDGET_ENABLED, false);
     }
 
     public static void enableWidget(Context context) {
