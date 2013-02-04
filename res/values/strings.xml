@@ -63,4 +63,11 @@
     <string name="billing_failed">In-app purchase failed.</string>
     <string name="billing_success">Purchase successful. Thanks!</string>
     <string name="billing_not_supported">In-app purchases are not supported by your device or currently not available. :(</string>
+
+    <string name="motivation01">So much to do!</string>
+    <string name="motivation02">Tomorrow is another day!</string>
+    <string name="motivation03">Let\'s do something else!</string>
+    <string name="motivation04">How about a break?</string>
+    <string name="motivation05">Go for it!</string>
+
 </resources>

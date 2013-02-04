@@ -1,6 +1,7 @@
 package com.androidzeitgeist.procrastination.helper;
 
 import java.util.List;
+import java.util.Random;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -94,7 +95,11 @@ public abstract class NotificationHelper {
         inboxStyle.setBigContentTitle(title);
         builder.setStyle(inboxStyle);
 
-        builder.setSubText("");
+        String[] motivations = context.getResources().getStringArray(R.array.motivations);
+        Random random = new Random();
+        int index = random.nextInt(motivations.length);
+
+        builder.setSubText(motivations[index]);
 
         return builder.build();
     }
