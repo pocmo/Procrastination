@@ -33,7 +33,13 @@ public class AddonsActivity extends Activity implements IabHelper.OnIabSetupFini
 
         setContentView(R.layout.activity_addons);
 
-        String publicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm2WwYsy0sC4gCcal0bxln6nmGY50KjhEs9fvjbk6WeN612Z63HikAvg8MWkHfpPUQbz8h+5Noc3VGWLpY7/ttUp4UO1g2LkKC1ich99r/Zn5BMCzy8JQ1LX4UKVpEmZ2m4gElSb8JqntDnocD0obj9MPSWJYKfQnMYsVTenIqwtLRwoxUc+PkUexfCWhIwVyZW10SYiUTCGvwvXMNsKSRM31UbFa+bPqQwvkWTG50WAFRgUiA+DbmMJZ/VEu1Tfp9iPHHZWNuWPLLrKxR9Jo1vAWcuejqmuk8kcnGNbgUOgTcQ9pB4DxQJhrSj80LzpKaxZ9nJAjRVMzfuwhuTprrQIDAQAB";
+        String publicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm2WwY"
+            + "sy0sC4gCcal0bxln6nmGY50KjhEs9fvjbk6WeN612Z63HikAvg8MWkHfpPUQbz"
+            + "8h+5Noc3VGWLpY7/ttUp4UO1g2LkKC1ich99r/Zn5BMCzy8JQ1LX4UKVpEmZ2m"
+            + "4gElSb8JqntDnocD0obj9MPSWJYKfQnMYsVTenIqwtLRwoxUc+PkUexfCWhIwV"
+            + "yZW10SYiUTCGvwvXMNsKSRM31UbFa+bPqQwvkWTG50WAFRgUiA+DbmMJZ/VEu1"
+            + "Tfp9iPHHZWNuWPLLrKxR9Jo1vAWcuejqmuk8kcnGNbgUOgTcQ9pB4DxQJhrSj8"
+            + "0LzpKaxZ9nJAjRVMzfuwhuTprrQIDAQAB";
 
         billingHelper = new IabHelper(this, publicKey);
         billingHelper.enableDebugLogging(BuildConfig.DEBUG, "Procrastination/BillingHelper");
