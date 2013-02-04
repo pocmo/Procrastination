@@ -66,8 +66,10 @@ public abstract class NotificationHelper {
     private static Notification buildNotification(Context context, List<Task> tasks, boolean onGoing) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
+        String title =  context.getResources().getQuantityString(R.plurals.notification_title, tasks.size(), tasks.size());
+
         builder.setNumber(tasks.size());
-        builder.setContentTitle(context.getString(R.string.notification_title, tasks.size()));
+        builder.setContentTitle(title);
         builder.setContentText(context.getString(R.string.notification_text));
 
         Intent intent = new Intent(context, StartupActivity.class);
@@ -89,7 +91,7 @@ public abstract class NotificationHelper {
         for (Task task : tasks) {
             inboxStyle.addLine(task.getTitle());
         }
-        inboxStyle.setBigContentTitle(context.getString(R.string.notification_title, tasks.size()));
+        inboxStyle.setBigContentTitle(title);
         builder.setStyle(inboxStyle);
 
         builder.setSubText("");

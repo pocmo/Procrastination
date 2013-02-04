@@ -38,7 +38,10 @@
     <string name="dialog_button_mark_done">Mark as done</string>
     <string name="dialog_button_do_tomorrow">Do it tomorrow</string>
 
-    <string name="notification_title">%d open tasks</string>
+    <plurals name="notification_title">
+        <item quantity="one">%d open task</item>
+        <item quantity="other">%d open tasks</item>
+    </plurals>
     <string name="notification_text">Tasks are waiting for you.</string>
 
     <string name="settings_category_notifications_title">Notifications</string>
