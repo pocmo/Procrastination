@@ -2,3 +2,12 @@
 bin/
 gen/
 
+# IntelliJ
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+build/
+local.properties
+

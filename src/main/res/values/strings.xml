@@ -69,4 +69,12 @@
     <string name="motivation04">How about a break?</string>
     <string name="motivation05">Go for it!</string>
 
+    <string-array name="motivations">
+        <item>@string/motivation01</item>
+        <item>@string/motivation02</item>
+        <item>@string/motivation03</item>
+        <item>@string/motivation04</item>
+        <item>@string/motivation05</item>
+    </string-array>
+
 </resources>
