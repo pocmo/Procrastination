@@ -1,0 +1,10 @@
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="180dp"
+    android:minHeight="110dp"
+    android:updatePeriodMillis="3600000"
+    android:previewImage="@drawable/widget_preview"
+    android:initialLayout="@layout/widget_tasks"
+    android:resizeMode="horizontal|vertical"
+    android:configure="com.androidzeitgeist.procrastination.activity.AddonsActivity"
+    android:widgetCategory="home_screen|keyguard">
+</appwidget-provider>
